@@ -24,22 +24,26 @@ const loadCategory = async () => {
     const data = await res.json();
     const card = document.getElementById('card')
     data.data.forEach((item) => {
+        console.log(item.others);
+        let verifiedBadge = ""
+        if(item.authors[0].verified) {
+            verifiedBadge = `<img class="" src="images/verify.svg" alt="">`
+        }
         const div = document.createElement('div');
         div.className = '';
         div.innerHTML = `
         <div class="card card-compact w-96 bg-base-100 shadow-xl">
-        <figure><img src="images/sample.jpg" alt="Shoes" /></figure>
+        <figure><img src="${item.thumbnail}" alt="" /></figure>
         <div class="card-body">
             <div class="flex items-start gap-2">
-                <img class="max-w-10 rounded-full mt-2" src="images/sample-pp.jpg" alt="">
+                <img class="w-10 h-10 rounded-full" src="${item.authors[0].profile_picture}" alt="">
                 <div>
-                    <h2 class="card-title text-[#171717] font-bold">Building a Winning UX Strategy Using the
-                        Kano Model</h2>
+                    <h2 class="card-title text-[#171717] font-bold">${item.title}</h2>
                     <div class="flex gap-2 max-w-[150px] mb-3">
-                        <p class="text-[#171717B2]">Awlad Hossain</p>
-                        <img class="" src="images/verify.svg" alt="">
+                        <p class="text-[#171717B2]">${item.authors[0].profile_name}</p>
+                        ${verifiedBadge}
                     </div>
-                    <p class="text-[#171717B2]">91K views</p>
+                    <p class="text-[#171717B2]">${item.others.views}</p>
                 </div>
             </div>
         </div>
