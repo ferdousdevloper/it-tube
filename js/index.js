@@ -18,6 +18,7 @@ const loadCatagories = async () => {
 
     })
 }
+
 const errorEle = document.getElementById('error-element');
 
 const loadCategory = async (cataId) => {
@@ -27,7 +28,7 @@ const loadCategory = async (cataId) => {
     const data = await res.json();    
     const card = document.getElementById('card');
 
-    if (data.length === 0) {
+    if (data.data.length === 0) {
         errorEle.classList.remove('hidden')
     } else {
         errorEle.classList.add('hidden')
