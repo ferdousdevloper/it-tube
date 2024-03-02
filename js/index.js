@@ -13,20 +13,32 @@ const loadCatagories = async () => {
         // buttonContainer.appendChild(catagoryBtn);
 
         const div = document.createElement('div');
-        div.innerHTML = `<button onclick="" class='btn text-[#252525B2] font-medium'>${item.category}</button>`
+        div.innerHTML = `<button onclick="loadCategory('${item.category_id}')" class='btn text-[#252525B2] font-medium'>${item.category}</button>`
         buttonContainer.appendChild(div);
 
     })
 }
+const errorEle = document.getElementById('error-element');
 
-const loadCategory = async () => {
-    const res = await fetch("https://openapi.programming-hero.com/api/videos/category/1000");
-    const data = await res.json();
-    const card = document.getElementById('card')
+const loadCategory = async (cataId) => {
+    console.log(cataId)
+    const res = await fetch(
+        `https://openapi.programming-hero.com/api/videos/category/${cataId}`);
+    const data = await res.json();    
+    const card = document.getElementById('card');
+
+    if (data.length === 0) {
+        errorEle.classList.remove('hidden')
+    } else {
+        errorEle.classList.add('hidden')
+    }
+
+    card.innerHTML = "";
+
     data.data.forEach((item) => {
-        console.log(item.others);
+        // console.log(item);
         let verifiedBadge = ""
-        if(item.authors[0].verified) {
+        if (item.authors[0].verified) {
             verifiedBadge = `<img class="" src="images/verify.svg" alt="">`
         }
         const div = document.createElement('div');
@@ -52,13 +64,13 @@ const loadCategory = async () => {
 
             `
 
-    card.appendChild(div);
+        card.appendChild(div);
     })
 }
 
 
 
-loadCategory()
+loadCategory("1001")
 
 loadCatagories()
 
